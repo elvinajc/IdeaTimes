@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A4BBEFA928195D8000504B55 /* MyIdeaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BBEFA828195D8000504B55 /* MyIdeaVC.swift */; };
+		A4BBEFAB281971D300504B55 /* IdeasDataa.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BBEFAA281971D300504B55 /* IdeasDataa.swift */; };
+		A4E79C522819585800A41DE1 /* IdeasTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E79C512819585800A41DE1 /* IdeasTableView.swift */; };
+		A4E79C562819591A00A41DE1 /* IdeasCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E79C552819591A00A41DE1 /* IdeasCell.swift */; };
 		A4EBED56281950B8001D69BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EBED55281950B8001D69BB /* AppDelegate.swift */; };
 		A4EBED58281950B8001D69BB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EBED57281950B8001D69BB /* SceneDelegate.swift */; };
-		A4EBED5A281950B8001D69BB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4EBED59281950B8001D69BB /* ViewController.swift */; };
 		A4EBED5D281950B8001D69BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4EBED5B281950B8001D69BB /* Main.storyboard */; };
 		A4EBED60281950B8001D69BB /* ideaTimes2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A4EBED5E281950B8001D69BB /* ideaTimes2.xcdatamodeld */; };
 		A4EBED62281950B9001D69BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4EBED61281950B9001D69BB /* Assets.xcassets */; };
@@ -17,10 +20,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A4BBEFA828195D8000504B55 /* MyIdeaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyIdeaVC.swift; sourceTree = "<group>"; };
+		A4BBEFAA281971D300504B55 /* IdeasDataa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeasDataa.swift; sourceTree = "<group>"; };
+		A4E79C512819585800A41DE1 /* IdeasTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeasTableView.swift; sourceTree = "<group>"; };
+		A4E79C552819591A00A41DE1 /* IdeasCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeasCell.swift; sourceTree = "<group>"; };
 		A4EBED52281950B8001D69BB /* ideaTimes2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ideaTimes2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4EBED55281950B8001D69BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A4EBED57281950B8001D69BB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		A4EBED59281950B8001D69BB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A4EBED5C281950B8001D69BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A4EBED5F281950B8001D69BB /* ideaTimes2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ideaTimes2.xcdatamodel; sourceTree = "<group>"; };
 		A4EBED61281950B9001D69BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -60,12 +66,15 @@
 			children = (
 				A4EBED55281950B8001D69BB /* AppDelegate.swift */,
 				A4EBED57281950B8001D69BB /* SceneDelegate.swift */,
-				A4EBED59281950B8001D69BB /* ViewController.swift */,
+				A4BBEFA828195D8000504B55 /* MyIdeaVC.swift */,
+				A4E79C552819591A00A41DE1 /* IdeasCell.swift */,
 				A4EBED5B281950B8001D69BB /* Main.storyboard */,
+				A4E79C512819585800A41DE1 /* IdeasTableView.swift */,
 				A4EBED61281950B9001D69BB /* Assets.xcassets */,
 				A4EBED63281950B9001D69BB /* LaunchScreen.storyboard */,
 				A4EBED66281950B9001D69BB /* Info.plist */,
 				A4EBED5E281950B8001D69BB /* ideaTimes2.xcdatamodeld */,
+				A4BBEFAA281971D300504B55 /* IdeasDataa.swift */,
 			);
 			path = ideaTimes2;
 			sourceTree = "<group>";
@@ -141,10 +150,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4EBED5A281950B8001D69BB /* ViewController.swift in Sources */,
+				A4E79C562819591A00A41DE1 /* IdeasCell.swift in Sources */,
 				A4EBED56281950B8001D69BB /* AppDelegate.swift in Sources */,
+				A4BBEFAB281971D300504B55 /* IdeasDataa.swift in Sources */,
 				A4EBED60281950B8001D69BB /* ideaTimes2.xcdatamodeld in Sources */,
 				A4EBED58281950B8001D69BB /* SceneDelegate.swift in Sources */,
+				A4BBEFA928195D8000504B55 /* MyIdeaVC.swift in Sources */,
+				A4E79C522819585800A41DE1 /* IdeasTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
