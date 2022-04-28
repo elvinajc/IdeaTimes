@@ -32,20 +32,16 @@ var selectedIndex = 0
 
 var selectedIdeas : IdeasData? = nil
 
-class SearchResultVC: UIViewController{
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBlue
-    }
-    
-}
 
-class IdeasTableView: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate{
+class IdeasTableView: UITableViewController, UISearchBarDelegate, UISearchDisplayDelegate{
+
+    
     //search bar
     let searchController = UISearchController(searchResultsController: nil)
+    var filteredIdeas = [IdeasData]()
     
     var firstLoad = true
+
     
     @IBOutlet var ideaTableView: UITableView!
     @IBOutlet weak var segmentControl: UISegmentedControl!
@@ -57,7 +53,7 @@ class IdeasTableView: UITableViewController, UISearchResultsUpdating, UISearchBa
     //////////////
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        initSearchController()
         if(firstLoad){
             firstLoad = false
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -89,15 +85,7 @@ class IdeasTableView: UITableViewController, UISearchResultsUpdating, UISearchBa
             }
         }
     
-        //add searchbar
-        searchController.searchBar.delegate = self
-        searchController.searchResultsUpdater = self
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-       
-        //set cancel button color on search bar to chocolate (#6C4817)
-        let cancelButtonAttributes = [NSAttributedString.Key.foregroundColor: UIColor(red: 108/255, green: 72/255, blue: 23/255, alpha: 1)]
-         UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes , for: .normal)
+    
         
         showIdeasList = personalIdeasList
 
@@ -107,21 +95,59 @@ class IdeasTableView: UITableViewController, UISearchResultsUpdating, UISearchBa
              } else if showIdeasList.count > 0 {
                  noIdeasAvailable.isHidden = true
              }
-        print(showIdeasList)
+       // print(showIdeasList)
+        
+      
     }
     //////////////
+
     
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let text = searchController.searchBar.text else{ return
-            
-        }
-        let vc = searchController.searchResultsController as? SearchResultVC
-        vc?.view.backgroundColor = .yellow
+    func initSearchController(){
+        searchController.loadViewIfNeeded()
+//        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.enablesReturnKeyAutomatically = false
+        searchController.searchBar.enablesReturnKeyAutomatically = false
+        searchController.searchBar.returnKeyType = UIReturnKeyType.done
         
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+       
+        //set cancel button color on search bar to chocolate (#6C4817)
+        let cancelButtonAttributes = [NSAttributedString.Key.foregroundColor: UIColor(red: 108/255, green: 72/255, blue: 23/255, alpha: 1)]
+         UIBarButtonItem.appearance().setTitleTextAttributes(cancelButtonAttributes , for: .normal)
+        
+        searchController.searchBar.delegate = self
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
+        print("searchText", searchText)
+       filteredIdeas = searchText.isEmpty ? showIdeasList: showIdeasList.filter {
+        (item: IdeasData) -> Bool in
+      //  If data = searchText, return true to include it
+           return item.ideasTitle!.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
+       }
+                tableView.reloadData()
+    }
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ideasCellID", for: indexPath) as! IdeasCell
+        if searchController.isActive{
+            cell.ideaTitle.text = filteredIdeas[indexPath.row].ideasTitle
+            cell.ideaDesc.text = filteredIdeas[indexPath.row].ideasDesc
+            
+            //time
+            let dateFormatter = DateFormatter()
+            
+            //date format
+            dateFormatter.dateFormat = "MMM d, yyyy"
+            // Convert Date to String
+           
+            cell.executionDate.text = dateFormatter.string(from: filteredIdeas[indexPath.row].execDate ?? Date())
+            return cell
+            
+        }else{
         cell.ideaTitle.text =  showIdeasList[indexPath.row].ideasTitle
         cell.ideaDesc.text = showIdeasList[indexPath.row].ideasDesc
         
@@ -132,21 +158,27 @@ class IdeasTableView: UITableViewController, UISearchResultsUpdating, UISearchBa
         dateFormatter.dateFormat = "MMM d, yyyy"
         // Convert Date to String
        
-        //TANGGAL MASIH NGACO
         cell.executionDate.text = dateFormatter.string(from: showIdeasList[indexPath.row].execDate ?? Date())
                                                  
         
         return cell
+            
+        }
     }
     
     
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (searchController.isActive){
+        return filteredIdeas.count
+        }else{
         return showIdeasList.count
+        }
     }
-    ///TAMBAHAN DELETE TRAILING ACTION
-    //////
+    
+    
+    ///DELETE TRAILING ACTION
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         // Component Delete action
         let delete = UIContextualAction(style: .normal, title: "Delete") { [weak self] (action, view, completionHandler) in
@@ -183,8 +215,9 @@ class IdeasTableView: UITableViewController, UISearchResultsUpdating, UISearchBa
             let indexPath = tableView.indexPathForSelectedRow!
             let myIdea = segue.destination as? MyIdeaVC
             let selectedIdeas : IdeasData!
- ///      //ini hrs cek lg
-            selectedIdeas = showIdeasList[indexPath.row]
+ 
+                selectedIdeas = showIdeasList[indexPath.row]
+            
             myIdea!.selectedIdeas = selectedIdeas
             
             tableView.deselectRow(at: indexPath, animated: true)
@@ -272,5 +305,8 @@ class IdeasTableView: UITableViewController, UISearchResultsUpdating, UISearchBa
     }
     
     
-    
+
 }
+
+
+

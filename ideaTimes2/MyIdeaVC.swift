@@ -248,7 +248,7 @@ class MyIdeaVC: UIViewController{
                                 }
                                 
                                 //buat cek aja
-                                print(showIdeasList)
+                               // print(showIdeasList)
                                 
                         //backtoideasdump
                             // navigationController?.popViewController(animated: true)
