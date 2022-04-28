@@ -87,7 +87,6 @@ class MyIdeaVC: UIViewController{
             ideaDescriptionField.text = selectedIdeas?.ideasDesc
         }
         
-        
     }
     
     //DatePicker
@@ -158,15 +157,19 @@ class MyIdeaVC: UIViewController{
                     newIdeas.ideasCategory = ideaCategoriesField.text
                     
                     let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "MMM d, yyyy"
                     // Convert Date to String
                     newIdeas.execDate = dateFormatter.date(from: executionDateField.text!)
+   //                 print(newIdeas.execDate)
                     newIdeas.ideasDesc = ideaDescriptionField.text
                     
                     do{
                         try context.save()
                         personalIdeasList.append(newIdeas)
                         //back to idea dump
-                        navigationController?.popViewController(animated: true)
+                       // navigationController?.popViewController(animated: true)
+                        navigationController?.popToRootViewController(animated: true)
+                        
                     } catch{
                         print("context save error")
                     }
@@ -178,6 +181,7 @@ class MyIdeaVC: UIViewController{
                     newIdeas.ideasCategory = ideaCategoriesField.text
                     
                     let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "MMM d, yyyy"
                     // Convert Date to String
                     newIdeas.execDate = dateFormatter.date(from: executionDateField.text!)
                     newIdeas.ideasDesc = ideaDescriptionField.text
@@ -186,39 +190,46 @@ class MyIdeaVC: UIViewController{
                         try context.save()
                         workIdeasList.append(newIdeas)
                         //back to idea dump
-                        navigationController?.popViewController(animated: true)
+                        //navigationController?.popViewController(animated: true)
+                        navigationController?.popToRootViewController(animated: true)
+                        
                       } catch{
                         print("context save error")
                       }
         }
-           //edit
+        
+        //edit ideas
         }else{
+            
             let request = NSFetchRequest<NSFetchRequestResult>(entityName: "IdeasData")
             do {
                 let results: NSArray = try context.fetch(request) as NSArray
                 for result in results{
                     let idea = result as! IdeasData
                     
-                    //bisa jadi juga pakai if else personal atau work
-                    //personalIdeasList.append(idea)
-                    //workIdeasList.append(idea)
-                    
-                    //MASIH NGACO
-                    if(idea == selectedIdeas){
-                        idea.ideasTitle = ideaTitleField.text
-                        idea.ideasCategory = ideaCategoriesField.text
+// INI MASIH BELUM WORK yg category masih belum keganti
+                    //pakai if else personal atau work
+                            if(idea == selectedIdeas){
+                                idea.ideasTitle = ideaTitleField.text
+                                idea.ideasCategory = ideaCategoriesField.text
+                                
+                                let dateFormatter = DateFormatter()
+                                dateFormatter.dateFormat = "MMM d, yyyy"
+                                idea.execDate = dateFormatter.date(from: executionDateField.text!)
+                                idea.ideasDesc = ideaDescriptionField.text
+                                try context.save()
                         
-                        //time
-                        let dateFormatter = DateFormatter()
-                        //TANGGAL MASIH NGACO
-                        idea.execDate = dateFormatter.date(from: executionDateField.text!)
-                        idea.ideasDesc = ideaDescriptionField.text
-                       
-                    }
+                        //backtoideasdump
+                            // navigationController?.popViewController(animated: true)
+                                navigationController?.popToRootViewController(animated: true)
+                            }
+    
+                    
                 }
             } catch  {
                 print("Fetch failed")
             }
+            
             
         }
     }
@@ -257,7 +268,7 @@ extension MyIdeaVC: UITextFieldDelegate{
           func textViewDidEndEditing(_ textView: UITextView) {
               if textView.text == ""{
                 ideaDescription.text = "Idea Description"
-                ideaDescription.textColor = UIColor.lightGray
+                  ideaDescription.textColor = UIColor.gray
                 ideaDescription.returnKeyType = .done
               }
           }

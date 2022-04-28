@@ -110,6 +110,7 @@
                         <outlet property="noIdeasAvailable" destination="tC9-es-tY4" id="xcz-EZ-5JY"/>
                         <outlet property="segmentControl" destination="MLO-0F-0kN" id="Ay8-4c-Zzm"/>
                         <segue destination="vvH-gn-laJ" kind="show" identifier="goToMyIdeas" id="Q7Y-0Z-dIb"/>
+                        <segue destination="vvH-gn-laJ" kind="show" identifier="editIdeas" id="MYW-7f-iOf"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7nx-ZW-yFq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -251,7 +252,7 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="cBd-NX-o4P">
                                 <rect key="frame" x="20" y="5" width="95" height="34.333333333333336"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" red="0.40000003579999999" green="0.32156863810000003" blue="0.28627452250000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" red="0.42352938649999999" green="0.34901961679999999" blue="0.31372550129999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="chevron.backward" catalog="system" title="Back"/>
                                 <connections>
@@ -266,7 +267,7 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="DmY-07-d6E">
                                 <rect key="frame" x="313" y="4.6666666666666679" width="95" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" red="0.47450977560000002" green="0.31372550129999999" blue="0.078431375319999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" red="0.42352938649999999" green="0.34901961679999999" blue="0.31372550129999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Save"/>
                                 <connections>
@@ -279,6 +280,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="backButton" destination="AeG-ek-BIp" id="yu1-lL-B6s"/>
                         <outlet property="executionDateField" destination="hUj-CJ-fXC" id="VAd-hH-cvd"/>
                         <outlet property="ideaCategoriesField" destination="zD4-ON-fpA" id="UgW-bF-dax"/>
                         <outlet property="ideaDescription" destination="QCU-ag-QEe" id="YlT-4N-Pt3"/>
@@ -293,6 +295,9 @@
             <point key="canvasLocation" x="1146.7289719626167" y="83.585313174946009"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="MYW-7f-iOf"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="IdeasPageBackground" width="2848" height="4288"/>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
