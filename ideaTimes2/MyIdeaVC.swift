@@ -38,6 +38,7 @@ class MyIdeaVC: UIViewController{
     @IBOutlet var ideaDescription: UITextView!
     
     var selectedIdeas: IdeasData? = nil
+ //////
 
     let ideaTV = IdeasTableView()
     
@@ -129,11 +130,10 @@ class MyIdeaVC: UIViewController{
         //set tanggal di field biar jadi yang dipilih (kalau gapake formatter)
         //executionDateField.text = "\(datePicker.date)"
         
-        //set timefield biar muncul tanggal saja sesuai format yang sudah ditentukan oleh dformatter
+        //set execDatefield biar muncul tanggal saja sesuai format yang sudah ditentukan oleh dformatter
         executionDateField.text = dformatter.string(from: datePicker.date)
         
         self.view.endEditing(true)
-        //nanti harus buat variabel penampung tanggalnya untuk dimasukkin ke coredata
     }
     
 
@@ -185,6 +185,7 @@ class MyIdeaVC: UIViewController{
                     // Convert Date to String
                     newIdeas.execDate = dateFormatter.date(from: executionDateField.text!)
                     newIdeas.ideasDesc = ideaDescriptionField.text
+            
                     
                     do{
                         try context.save()
@@ -192,33 +193,63 @@ class MyIdeaVC: UIViewController{
                         //back to idea dump
                         //navigationController?.popViewController(animated: true)
                         navigationController?.popToRootViewController(animated: true)
-                        
+
                       } catch{
                         print("context save error")
                       }
+      
         }
         
+            
         //edit ideas
         }else{
+            //ini buat nampung previous category yang di select
+            let categoryPrevValue = selectedIdeas?.ideasCategory
             
             let request = NSFetchRequest<NSFetchRequestResult>(entityName: "IdeasData")
             do {
                 let results: NSArray = try context.fetch(request) as NSArray
                 for result in results{
                     let idea = result as! IdeasData
+
+  
                     
-// INI MASIH BELUM WORK yg category masih belum keganti
+// INI MASIH BELUM WORK yg category masih belum keganti di tampilannya
                     //pakai if else personal atau work
                             if(idea == selectedIdeas){
                                 idea.ideasTitle = ideaTitleField.text
                                 idea.ideasCategory = ideaCategoriesField.text
-                                
+
                                 let dateFormatter = DateFormatter()
                                 dateFormatter.dateFormat = "MMM d, yyyy"
                                 idea.execDate = dateFormatter.date(from: executionDateField.text!)
+                                
                                 idea.ideasDesc = ideaDescriptionField.text
-                                try context.save()
-                        
+                                
+                                    try context.save()
+                                
+                                
+                                if(categoryPrevValue == "Personal"){
+                                   // showIdeasList = personalIdeasList
+                                  //removesemuaarraynya
+                                    if(idea.ideasCategory != categoryPrevValue){
+                                        showIdeasList.remove(at: selectedIndex)
+                                        personalIdeasList.remove(at: selectedIndex)
+                                    
+                                    workIdeasList.append(idea)
+                                    }
+                                } else if(categoryPrevValue == "Work"){
+                                    if(idea.ideasCategory != categoryPrevValue){
+                                        showIdeasList.remove(at: selectedIndex)
+                                        workIdeasList.remove(at: selectedIndex)
+                                    
+                                    personalIdeasList.append(idea)
+                                    }
+                                }
+                                
+                                //buat cek aja
+                                print(showIdeasList)
+                                
                         //backtoideasdump
                             // navigationController?.popViewController(animated: true)
                                 navigationController?.popToRootViewController(animated: true)

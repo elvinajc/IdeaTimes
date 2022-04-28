@@ -57,7 +57,6 @@ class IdeasTableView: UITableViewController, UISearchResultsUpdating, UISearchBa
     //////////////
     override func viewDidLoad() {
         super.viewDidLoad()
-        super.viewDidAppear(true)
         
         if(firstLoad){
             firstLoad = false
@@ -162,6 +161,8 @@ class IdeasTableView: UITableViewController, UISearchResultsUpdating, UISearchBa
                 workIdeasList.remove(at: indexPath.row)
                 tableView.reloadData()
             }
+            
+            
             
             
             completionHandler(true)
