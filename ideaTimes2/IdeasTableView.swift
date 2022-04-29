@@ -193,10 +193,7 @@ class IdeasTableView: UITableViewController, UISearchBarDelegate, UISearchDispla
                 workIdeasList.remove(at: indexPath.row)
                 tableView.reloadData()
             }
-            
-            
-            
-            
+
             completionHandler(true)
         }
         delete.backgroundColor = UIColor(red: 0.42, green: 0.28, blue: 0.09, alpha: 1.00)
@@ -225,6 +222,12 @@ class IdeasTableView: UITableViewController, UISearchBarDelegate, UISearchDispla
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         tableView.reloadData()
     }
     

@@ -33,6 +33,8 @@ class MyIdeaVC: UIViewController{
     
     //Date Picker
     let datePicker = UIDatePicker()
+    var selectedDate = Date()
+    
     
     //TextView
     @IBOutlet var ideaDescription: UITextView!
@@ -133,6 +135,8 @@ class MyIdeaVC: UIViewController{
         //set execDatefield biar muncul tanggal saja sesuai format yang sudah ditentukan oleh dformatter
         executionDateField.text = dformatter.string(from: datePicker.date)
         
+        selectedDate = datePicker.date
+        
         self.view.endEditing(true)
     }
     
@@ -156,11 +160,13 @@ class MyIdeaVC: UIViewController{
                     newIdeas.ideasTitle = ideaTitleField.text
                     newIdeas.ideasCategory = ideaCategoriesField.text
                     
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "MMM d, yyyy"
-                    // Convert Date to String
-                    newIdeas.execDate = dateFormatter.date(from: executionDateField.text!)
-   //                 print(newIdeas.execDate)
+//                    let dateFormatter = DateFormatter()
+//                    dateFormatter.dateFormat = "MMM d, yyyy"
+//                    // Convert Date to String
+//                    newIdeas.execDate = dateFormatter.date(from: executionDateField.text!)
+//   //                 print(newIdeas.execDate)
+                    
+                    newIdeas.execDate = selectedDate
                     newIdeas.ideasDesc = ideaDescriptionField.text
                     
                     do{
@@ -180,10 +186,12 @@ class MyIdeaVC: UIViewController{
                     newIdeas.ideasTitle = ideaTitleField.text
                     newIdeas.ideasCategory = ideaCategoriesField.text
                     
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "MMM d, yyyy"
-                    // Convert Date to String
-                    newIdeas.execDate = dateFormatter.date(from: executionDateField.text!)
+//                    let dateFormatter = DateFormatter()
+//                    dateFormatter.dateFormat = "MMM d, yyyy"
+//                    // Convert Date to String
+//                    newIdeas.execDate = dateFormatter.date(from: executionDateField.text!)
+            
+                    newIdeas.execDate = selectedDate
                     newIdeas.ideasDesc = ideaDescriptionField.text
             
                     
@@ -214,17 +222,18 @@ class MyIdeaVC: UIViewController{
 
   
                     
-// INI MASIH BELUM WORK yg category masih belum keganti di tampilannya
                     //pakai if else personal atau work
                             if(idea == selectedIdeas){
                                 idea.ideasTitle = ideaTitleField.text
                                 idea.ideasCategory = ideaCategoriesField.text
-
-                                let dateFormatter = DateFormatter()
-                                dateFormatter.dateFormat = "MMM d, yyyy"
-                                idea.execDate = dateFormatter.date(from: executionDateField.text!)
                                 
-                                idea.ideasDesc = ideaDescriptionField.text
+
+//                                let dateFormatter = DateFormatter()
+//                                dateFormatter.dateFormat = "MMM d, yyyy"
+//                                idea.execDate = dateFormatter.date(from: executionDateField.text!)
+//
+//                                idea.ideasDesc = ideaDescriptionField.text
+                                idea.execDate = selectedDate
                                 
                                     try context.save()
                                 
@@ -264,6 +273,8 @@ class MyIdeaVC: UIViewController{
             
         }
     }
+    
+    
 }
 
 //EXTENSION
