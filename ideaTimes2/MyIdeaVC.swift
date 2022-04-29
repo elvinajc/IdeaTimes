@@ -34,7 +34,7 @@ class MyIdeaVC: UIViewController{
     //Date Picker
     let datePicker = UIDatePicker()
     var selectedDate = Date()
-    
+
     
     //TextView
     @IBOutlet var ideaDescription: UITextView!
@@ -91,7 +91,7 @@ class MyIdeaVC: UIViewController{
         }
         
     }
-    
+
     //DatePicker
     func createDatePicker(){
         //set datepicker frame size
@@ -159,13 +159,6 @@ class MyIdeaVC: UIViewController{
                     newIdeas.ideasID = Int32(truncating: personalIdeasList.count as NSNumber)
                     newIdeas.ideasTitle = ideaTitleField.text
                     newIdeas.ideasCategory = ideaCategoriesField.text
-                    
-//                    let dateFormatter = DateFormatter()
-//                    dateFormatter.dateFormat = "MMM d, yyyy"
-//                    // Convert Date to String
-//                    newIdeas.execDate = dateFormatter.date(from: executionDateField.text!)
-//   //                 print(newIdeas.execDate)
-                    
                     newIdeas.execDate = selectedDate
                     newIdeas.ideasDesc = ideaDescriptionField.text
                     
@@ -185,11 +178,6 @@ class MyIdeaVC: UIViewController{
                     newIdeas.ideasID = Int32(truncating: workIdeasList.count as NSNumber)
                     newIdeas.ideasTitle = ideaTitleField.text
                     newIdeas.ideasCategory = ideaCategoriesField.text
-                    
-//                    let dateFormatter = DateFormatter()
-//                    dateFormatter.dateFormat = "MMM d, yyyy"
-//                    // Convert Date to String
-//                    newIdeas.execDate = dateFormatter.date(from: executionDateField.text!)
             
                     newIdeas.execDate = selectedDate
                     newIdeas.ideasDesc = ideaDescriptionField.text
@@ -227,12 +215,6 @@ class MyIdeaVC: UIViewController{
                                 idea.ideasTitle = ideaTitleField.text
                                 idea.ideasCategory = ideaCategoriesField.text
                                 
-
-//                                let dateFormatter = DateFormatter()
-//                                dateFormatter.dateFormat = "MMM d, yyyy"
-//                                idea.execDate = dateFormatter.date(from: executionDateField.text!)
-//
-//                                idea.ideasDesc = ideaDescriptionField.text
                                 idea.execDate = selectedDate
                                 
                                     try context.save()

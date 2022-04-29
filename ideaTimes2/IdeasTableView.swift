@@ -54,53 +54,51 @@ class IdeasTableView: UITableViewController, UISearchBarDelegate, UISearchDispla
     override func viewDidLoad() {
         super.viewDidLoad()
         initSearchController()
-        if(firstLoad){
-            firstLoad = false
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let context: NSManagedObjectContext = appDelegate.persistentContainer.viewContext
-         
-            let request = NSFetchRequest<NSFetchRequestResult>(entityName: "IdeasData")
-            do {
-                let results: NSArray = try context.fetch(request) as NSArray
-                for result in results{
-                    let idea = result as! IdeasData
-                    
-                    //pakai if else personal atau work
-                    
-                        if(idea.ideasCategory == "Personal"){
-                        showIdeasList=personalIdeasList
-                        personalIdeasList.append(idea)
-                        ideaTableView.reloadData()
-                        
-                        
-                        }else if(idea.ideasCategory == "Work"){
-                        showIdeasList=workIdeasList
-                        workIdeasList.append(idea)
-                        ideaTableView.reloadData()
-                        
-                    }
-                }
-            } catch  {
-                print("Fetch failed")
-            }
-        }
-    
-    
         
+//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//        let context: NSManagedObjectContext = appDelegate.persistentContainer.viewContext
+//
+//        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "IdeasData")
+//        do {
+//            let results: NSArray = try context.fetch(request) as NSArray
+//            for result in results{
+//                let idea = result as! IdeasData
+//
+//                //pakai if else personal atau work
+//
+//                    if(idea.ideasCategory == "Personal"){
+//                    showIdeasList=personalIdeasList
+//                    personalIdeasList.append(idea)
+//                    ideaTableView.reloadData()
+//
+//
+//                    }else if(idea.ideasCategory == "Work"){
+//                    showIdeasList=workIdeasList
+//                    workIdeasList.append(idea)
+//                    ideaTableView.reloadData()
+//
+//                }
+//            }
+//        } catch  {
+//            print("Fetch failed")
+//        }
+//
+//
+//
         showIdeasList = personalIdeasList
 
         // munculin no ideas available klo ga ad data ide yg tersedia
-             if showIdeasList.count == 0 {
-                 noIdeasAvailable.isHidden = false
-             } else if showIdeasList.count > 0 {
-                 noIdeasAvailable.isHidden = true
-             }
+//             if showIdeasList.count == 0 {
+//                 noIdeasAvailable.isHidden = false
+//             } else if showIdeasList.count > 0 {
+//                 noIdeasAvailable.isHidden = true
+//             }
        // print(showIdeasList)
         
       
     }
     //////////////
-
+     
     
     func initSearchController(){
         searchController.loadViewIfNeeded()
@@ -208,6 +206,7 @@ class IdeasTableView: UITableViewController, UISearchBarDelegate, UISearchDispla
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if (segue.identifier == "editIdeas"){
             let indexPath = tableView.indexPathForSelectedRow!
             let myIdea = segue.destination as? MyIdeaVC
@@ -221,29 +220,58 @@ class IdeasTableView: UITableViewController, UISearchBarDelegate, UISearchDispla
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        tableView.reloadData()
-    }
+  
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        //reset array
+        personalIdeasList.removeAll()
+        workIdeasList.removeAll()
+        showIdeasList.removeAll()
+     
+        //get data ulang
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context: NSManagedObjectContext = appDelegate.persistentContainer.viewContext
+     
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "IdeasData")
+        do {
+            let results: NSArray = try context.fetch(request) as NSArray
+            for result in results{
+                let idea = result as! IdeasData
+                
+                //pakai if else personal atau work
+                
+                    if(idea.ideasCategory == "Personal"){
+                    showIdeasList=personalIdeasList
+                    personalIdeasList.append(idea)
+                    ideaTableView.reloadData()
+                    
+                    
+                    }else if(idea.ideasCategory == "Work"){
+                    showIdeasList=workIdeasList
+                    workIdeasList.append(idea)
+                    ideaTableView.reloadData()
+                    
+                }
+            }
+        } catch  {
+            print("Fetch failed")
+        }
+    
+        
+        if showIdeasList.count == 0 {
+            noIdeasAvailable.isHidden = false
+        } else if showIdeasList.count > 0 {
+            noIdeasAvailable.isHidden = true
+        }
+        
+        
         tableView.reloadData()
-    }
-    
-    
-    @IBAction func composeButtonAction(_ sender: UIButton) {
-        performSegue(withIdentifier: "goToMyIdeas", sender: composeButton)
-    }
-    
-
-    
-    @IBAction func segmentControlAction(_ sender: UISegmentedControl) {
-        selectedIndex = self.segmentControl.selectedSegmentIndex
+        
+        //
         switch selectedIndex{
           case 0:
-              //return peopleArray.count
-           
             showIdeasList = personalIdeasList
             ideaTableView.reloadData()
             
@@ -257,7 +285,50 @@ class IdeasTableView: UITableViewController, UISearchBarDelegate, UISearchDispla
             print("Personal")
             
           case 1:
-             //return imagesArray.count
+            showIdeasList = workIdeasList
+            ideaTableView.reloadData()
+            
+            if showIdeasList.count == 0 {
+                noIdeasAvailable.isHidden = false
+            } else if showIdeasList.count > 0 {
+                noIdeasAvailable.isHidden = true
+            }
+            
+            print("Work")
+            
+          default:
+            //defaultnya sama kaya case 0
+            print("Personal")
+            showIdeasList = personalIdeasList
+            ideaTableView.reloadData()
+            
+          }
+    }
+    
+    
+    @IBAction func composeButtonAction(_ sender: UIButton) {
+        performSegue(withIdentifier: "goToMyIdeas", sender: composeButton)
+    }
+    
+
+    
+    @IBAction func segmentControlAction(_ sender: UISegmentedControl) {
+        selectedIndex = self.segmentControl.selectedSegmentIndex
+        switch selectedIndex{
+          case 0:
+            showIdeasList = personalIdeasList
+            ideaTableView.reloadData()
+            
+            if showIdeasList.count == 0 {
+                noIdeasAvailable.isHidden = false
+            } else if showIdeasList.count > 0 {
+                noIdeasAvailable.isHidden = true
+            }
+           
+          
+            print("Personal")
+            
+          case 1:
             showIdeasList = workIdeasList
             ideaTableView.reloadData()
             
@@ -279,8 +350,6 @@ class IdeasTableView: UITableViewController, UISearchBarDelegate, UISearchDispla
     }
     
  func deleteData(ideaTitle: String) {
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-//        let manageContext = appDelegate.persistentContainer.viewContext
      
      let appDelegate = UIApplication.shared.delegate as! AppDelegate
      let context: NSManagedObjectContext = appDelegate.persistentContainer.viewContext
